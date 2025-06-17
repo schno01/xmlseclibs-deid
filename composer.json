@@ -1,6 +1,6 @@
 {
-  "name": "robrichards/xmlseclibs",
-  "description": "A PHP library for XML Security",
+  "name": "schno01/xmlseclibs-deid",
+  "description": "A PHP library for XML Security for bundID/deutschlandID",
   "license": "BSD-3-Clause",
   "keywords": [
     "xml",
@@ -8,7 +8,7 @@
     "signature",
     "security"
   ],
-  "homepage": "https://github.com/robrichards/xmlseclibs",
+  "homepage": "https://github.com/schno01/xmlseclibs-deid",
   "autoload": {
     "psr-4": {
       "RobRichards\\XMLSecLibs\\": "src"
