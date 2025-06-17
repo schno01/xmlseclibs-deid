@@ -62,6 +62,8 @@ class XMLSecurityKey
     const RSA_SHA384 = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha384';
     const RSA_SHA512 = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha512';
     const HMAC_SHA1 = 'http://www.w3.org/2000/09/xmldsig#hmac-sha1';
+    const RSA_SHA256_MGF1 = 'http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1';
+    const RSA_SHA512_MGF1 = 'http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1';
     const AUTHTAG_LENGTH = 16;
 
     /** @var array */
@@ -256,6 +258,30 @@ class XMLSecurityKey
             case (self::HMAC_SHA1):
                 $this->cryptParams['library'] = $type;
                 $this->cryptParams['method'] = 'http://www.w3.org/2000/09/xmldsig#hmac-sha1';
+                break;
+            case (self::RSA_SHA256_MGF1):
+                // CHANGED FOR RSASSA_PSS HACK
+                $this->cryptParams['library'] = 'openssl';
+                $this->cryptParams['method'] = 'http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1';
+                if (is_array($params) && !empty($params['type'])) {
+                    if ($params['type'] == 'public' || $params['type'] == 'private') {
+                        $this->cryptParams['type'] = $params['type'];
+                        break;
+                    }
+                }
+
+                break;
+            case (self::RSA_SHA512_MGF1):
+                // CHANGED FOR RSASSA_PSS HACK
+                $this->cryptParams['library'] = 'openssl';
+                $this->cryptParams['method'] = 'http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1';
+                if (is_array($params) && !empty($params['type'])) {
+                    if ($params['type'] == 'public' || $params['type'] == 'private') {
+                        $this->cryptParams['type'] = $params['type'];
+                        break;
+                    }
+                }
+
                 break;
             default:
                 throw new Exception('Invalid Key Type');
